@@ -1,31 +1,30 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiProdutos.Models;
-using ApiProdutos.Repositories;
+using ApiProdutos.Services;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ProdutosController : ControllerBase
 {
-    private readonly ProdutoRepository _repository;
+    private readonly ProdutoService _service;
 
-    public ProdutosController(ProdutoRepository repository)
+    public ProdutosController(ProdutoService service)
     {
-        _repository = repository;
+        _service = service;
     }
 
     // GET: api/produtos
     [HttpGet]
     public IActionResult Get()
     {
-        var produtos = _repository.GetAll();
-        return Ok(produtos);
+        return Ok(_service.GetAll());
     }
 
     // GET: api/produtos/1
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        var produto = _repository.GetById(id);
+        var produto = _service.GetById(id);
 
         if (produto == null)
             return NotFound();
@@ -37,7 +36,7 @@ public class ProdutosController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] Produto produto)
     {
-        var id = _repository.Add(produto);
+        var id = _service.Add(produto);
         produto.Id = id;
 
         return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
@@ -47,12 +46,12 @@ public class ProdutosController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, [FromBody] Produto produto)
     {
-        var existente = _repository.GetById(id);
+        var existente = _service.GetById(id);
 
         if (existente == null)
             return NotFound();
 
-        _repository.Update(id, produto);
+        _service.Update(id, produto);
         return NoContent();
     }
 
@@ -60,12 +59,12 @@ public class ProdutosController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var existente = _repository.GetById(id);
+        var existente = _service.GetById(id);
 
         if (existente == null)
             return NotFound();
 
-        _repository.Delete(id);
+        _service.Delete(id);
         return NoContent();
     }
 }
