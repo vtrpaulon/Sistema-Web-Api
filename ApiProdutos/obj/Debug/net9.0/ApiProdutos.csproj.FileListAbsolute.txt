@@ -31,3 +31,10 @@ C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\obj\Debug\net9.0\refint\ApiPr
 C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\obj\Debug\net9.0\ApiProdutos.pdb
 C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\obj\Debug\net9.0\ApiProdutos.genruntimeconfig.cache
 C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\obj\Debug\net9.0\ref\ApiProdutos.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\Dapper.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\System.Data.SqlClient.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\runtimes\win-arm64\native\sni.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\runtimes\win-x64\native\sni.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\runtimes\win-x86\native\sni.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\runtimes\unix\lib\net8.0\System.Data.SqlClient.dll
+C:\Users\vitor\Desktop\Sistema-Web-Api\ApiProdutos\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Data.SqlClient.dll

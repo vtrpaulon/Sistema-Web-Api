@@ -1,17 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiProdutos.Models;
-using System.Linq;
+using ApiProdutos.Repositories;
 
 [ApiController]
 [Route("api/[controller]")]
 public class ProdutosController : ControllerBase
 {
-    private static List<Produto> produtos = new List<Produto>();
+    private readonly ProdutoRepository _repository;
+
+    public ProdutosController(ProdutoRepository repository)
+    {
+        _repository = repository;
+    }
 
     // GET: api/produtos
     [HttpGet]
     public IActionResult Get()
     {
+        var produtos = _repository.GetAll();
         return Ok(produtos);
     }
 
@@ -19,51 +25,47 @@ public class ProdutosController : ControllerBase
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
-        var produto = produtos.FirstOrDefault(p => p.Id == id);
+        var produto = _repository.GetById(id);
+
         if (produto == null)
-        {
             return NotFound();
-        }
+
         return Ok(produto);
     }
 
-    // POST: api/produtos
+    // POST
     [HttpPost]
     public IActionResult Post([FromBody] Produto produto)
     {
-       if (produto == null)
-       {
-           return BadRequest();
-       }
-       produtos.Add(produto);
-       return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
+        var id = _repository.Add(produto);
+        produto.Id = id;
+
+        return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
     }
 
-    // PUT: api/produtos/1
+    // PUT
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] Produto produtoAtualizado)
+    public IActionResult Put(int id, [FromBody] Produto produto)
     {
-        var produto = produtos.FirstOrDefault(p => p.Id == id);
-        if (produto == null)
-        {
+        var existente = _repository.GetById(id);
+
+        if (existente == null)
             return NotFound();
-        }
-        produto.Nome = produtoAtualizado.Nome;
-        produto.Preco = produtoAtualizado.Preco;
-        produto.DataCriacao = produtoAtualizado.DataCriacao;
+
+        _repository.Update(id, produto);
         return NoContent();
     }
 
-    // DELETE: api/produtos/1
+    // DELETE
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var produto = produtos.FirstOrDefault(p => p.Id == id);
-        if (produto == null)
-        {
+        var existente = _repository.GetById(id);
+
+        if (existente == null)
             return NotFound();
-        }
-        produtos.Remove(produto);
+
+        _repository.Delete(id);
         return NoContent();
     }
 }
