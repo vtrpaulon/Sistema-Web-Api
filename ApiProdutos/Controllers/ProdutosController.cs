@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiProdutos.Models;
 using ApiProdutos.Services;
+using ApiProdutos.Exceptions;
+
+namespace ApiProdutos.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -33,13 +36,21 @@ public class ProdutosController : ControllerBase
     }
 
     // POST
+
     [HttpPost]
     public IActionResult Post([FromBody] Produto produto)
     {
-        var id = _service.Add(produto);
-        produto.Id = id;
+        try
+        {
+            var id = _service.Add(produto);
+            produto.Id = id;
 
-        return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
+            return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
+        }
+        catch (BadRequestException ex)
+        {
+            return BadRequest(new { mensagem = ex.Message });
+        }
     }
 
     // PUT

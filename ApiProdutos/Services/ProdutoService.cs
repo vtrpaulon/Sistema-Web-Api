@@ -1,6 +1,7 @@
 using ApiProdutos;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
+using ApiProdutos.Exceptions;
 
 namespace  ApiProdutos.Services;
 
