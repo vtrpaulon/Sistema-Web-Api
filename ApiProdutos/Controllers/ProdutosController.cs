@@ -36,7 +36,6 @@ public class ProdutosController : ControllerBase
     }
 
     // POST
-
     [HttpPost]
     public IActionResult Post([FromBody] Produto produto)
     {
