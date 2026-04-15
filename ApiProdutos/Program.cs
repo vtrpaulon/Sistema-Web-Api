@@ -1,6 +1,6 @@
 using ApiProdutos.Services;
 using ApiProdutos.Repositories;
-using System.Data;
+using System.Data;  
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,6 @@ var app = builder.Build();
 
 // Pipeline
 app.UseHttpsRedirection();
-
+app.UseMiddleware<ApiProdutos.Middlewares.ErrorHandlingMiddleware>();
 app.MapControllers();
-
 app.Run();

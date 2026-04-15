@@ -39,17 +39,7 @@ public class ProdutosController : ControllerBase
     [HttpPost]
     public IActionResult Post([FromBody] Produto produto)
     {
-        try
-        {
-            var id = _service.Add(produto);
-            produto.Id = id;
-
-            return CreatedAtAction(nameof(Get), new { id = produto.Id }, produto);
-        }
-        catch (BadRequestException ex)
-        {
-            return BadRequest(new { mensagem = ex.Message });
-        }
+        var id = _service.Add(produto);
     }
 
     // PUT
