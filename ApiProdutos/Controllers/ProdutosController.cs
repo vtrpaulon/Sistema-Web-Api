@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ApiProdutos.Models;
 using ApiProdutos.Services;
 using ApiProdutos.Exceptions;
+using ApiProdutos.DTOs;
 
 namespace ApiProdutos.Controllers;
 
@@ -37,9 +38,11 @@ public class ProdutosController : ControllerBase
 
     // POST
     [HttpPost]
-    public IActionResult Post([FromBody] Produto produto)
+    public IActionResult Post([FromBody] ProdutoCreateDto dto)
     {
-        var id = _service.Add(produto);
+        var id = _service.Add(dto);
+
+        return CreatedAtAction(nameof(Get), new { id }, null);
     }
 
     // PUT

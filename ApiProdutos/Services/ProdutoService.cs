@@ -2,6 +2,7 @@ using ApiProdutos;
 using ApiProdutos.Models;
 using ApiProdutos.Repositories;
 using ApiProdutos.Exceptions;
+using ApiProdutos.DTOs;
 
 namespace  ApiProdutos.Services;
 
@@ -14,9 +15,17 @@ public class ProdutoService
         _repository = repository;
     }
 
-    public IEnumerable<Produto> GetAll()
+    public IEnumerable<ProdutoResponseDto> GetAll()
     {
-        return _repository.GetAll();
+        var produtos = _repository.GetAll();
+
+        return produtos.Select(p => new ProdutoResponseDto
+        {
+            Id = p.Id,
+            Nome = p.Nome,
+            Preco = p.Preco,
+            DataCriacao = p.DataCriacao
+        });
     }
 
     public Produto? GetById(int id)
@@ -24,12 +33,18 @@ public class ProdutoService
         return _repository.GetById(id);
     }
 
-    public int Add(Produto produto)
+    public int Add(ProdutoCreateDto dto)
     {
-        //regra de negocio
-        if(produto.Preco <= 0)
-            throw new Exception("O preço deve ser maior que zero");
-        
+        if (dto.Preco <= 0)
+            throw new BadRequestException("Preço deve ser maior que zero");
+
+        var produto = new Produto
+        {
+            Nome = dto.Nome,
+            Preco = dto.Preco,
+            DataCriacao = DateTime.Now
+        };
+
         return _repository.Add(produto);
     }
 
